@@ -47,4 +47,11 @@ Face relentless waves of enemies, collect powerful weapons, and survive long eno
 
 ## 🔧 Tech Stack
 - **Engine:** Godot  
-- **Language:** GDScript  
+- **Language:** GDScript
+
+---
+
+## 👥 Contributors & Credits
+- **Priyansh Singh** — Game Programming, Core Mechanics, Systems Design  
+- **Hayden Gaxiola** — Music Composition
+
