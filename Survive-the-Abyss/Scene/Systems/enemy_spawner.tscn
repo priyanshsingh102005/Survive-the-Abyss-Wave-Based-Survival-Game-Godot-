@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://juprnx6k4gfi"]
+
+[ext_resource type="Script" uid="uid://cl14fuq57wcw6" path="res://Scene/Systems/Scripts/enemy_spawner.gd" id="1_14m8p"]
+
+[node name="Enemy_Spawner" type="Node"]
+script = ExtResource("1_14m8p")

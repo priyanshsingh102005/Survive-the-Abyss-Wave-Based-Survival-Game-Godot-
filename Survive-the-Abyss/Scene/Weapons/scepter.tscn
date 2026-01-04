@@ -1,0 +1,50 @@
+[gd_scene load_steps=9 format=3 uid="uid://ltwxbec5uq4o"]
+
+[ext_resource type="Texture2D" uid="uid://dgcgxh7loxxsh" path="res://Asset/Roguelike Dungeon - Asset Bundle/Items/Scepter/Scepter_0.png" id="1_v281k"]
+[ext_resource type="Script" uid="uid://f1tc6p62k47r" path="res://Scene/Weapons/Weapons.gd" id="1_ys1jp"]
+[ext_resource type="Resource" uid="uid://cnq11slg1ooir" path="res://Scene/Weapons/Weapon_Resources/Scepter.tres" id="2_fbvfh"]
+[ext_resource type="Texture2D" uid="uid://u7aenglnupef" path="res://Asset/Roguelike Dungeon - Asset Bundle/Items/Scepter/Scepter_1.png" id="2_ys1jp"]
+[ext_resource type="Texture2D" uid="uid://cs4d2x4uyjc3f" path="res://Asset/Roguelike Dungeon - Asset Bundle/Items/Scepter/Scepter_2.png" id="3_fbvfh"]
+[ext_resource type="Texture2D" uid="uid://cxywk0n63kubc" path="res://Asset/Roguelike Dungeon - Asset Bundle/Items/Scepter/Scepter_3.png" id="4_dcn3w"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_y4yfy"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_v281k")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_ys1jp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_fbvfh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_dcn3w")
+}],
+"loop": true,
+"name": &"anim",
+"speed": 7.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_v281k"]
+radius = 14.2125
+height = 60.1106
+
+[node name="Scepter" type="Area2D"]
+scale = Vector2(0.5, 0.5)
+collision_layer = 32
+collision_mask = 0
+script = ExtResource("1_ys1jp")
+Weapon_properties = ExtResource("2_fbvfh")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(-3, -45)
+sprite_frames = SubResource("SpriteFrames_y4yfy")
+animation = &"anim"
+autoplay = "anim"
+frame_progress = 0.623576
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 0.680678
+shape = SubResource("CapsuleShape2D_v281k")

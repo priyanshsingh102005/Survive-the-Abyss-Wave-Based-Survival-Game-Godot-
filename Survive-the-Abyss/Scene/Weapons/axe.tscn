@@ -1,0 +1,48 @@
+[gd_scene load_steps=9 format=3 uid="uid://bw7rbyh54ssd6"]
+
+[ext_resource type="Script" uid="uid://f1tc6p62k47r" path="res://Scene/Weapons/Weapons.gd" id="1_tmoht"]
+[ext_resource type="Texture2D" uid="uid://s1cta23cv6tw" path="res://Asset/Roguelike Dungeon - Asset Bundle/Items/Axe/Axe_0.png" id="1_xq43g"]
+[ext_resource type="Resource" uid="uid://dttl0nu1rs5md" path="res://Scene/Weapons/Weapon_Resources/Axe.tres" id="2_18hir"]
+[ext_resource type="Texture2D" uid="uid://cno5cekjinbeu" path="res://Asset/Roguelike Dungeon - Asset Bundle/Items/Axe/Axe_1.png" id="2_tmoht"]
+[ext_resource type="Texture2D" uid="uid://ce348u82x0h7f" path="res://Asset/Roguelike Dungeon - Asset Bundle/Items/Axe/Axe_2.png" id="3_18hir"]
+[ext_resource type="Texture2D" uid="uid://bnn7il00v2ah8" path="res://Asset/Roguelike Dungeon - Asset Bundle/Items/Axe/Axe_3.png" id="4_h75cl"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_8ucd4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_xq43g")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_tmoht")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_18hir")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_h75cl")
+}],
+"loop": true,
+"name": &"anim",
+"speed": 7.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xq43g"]
+radius = 29.6142
+
+[node name="Axe" type="Area2D"]
+scale = Vector2(0.5, 0.5)
+collision_layer = 32
+collision_mask = 0
+script = ExtResource("1_tmoht")
+Weapon_properties = ExtResource("2_18hir")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="."]
+position = Vector2(-1, -47)
+sprite_frames = SubResource("SpriteFrames_8ucd4")
+animation = &"anim"
+autoplay = "anim"
+frame_progress = 0.106781
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_xq43g")

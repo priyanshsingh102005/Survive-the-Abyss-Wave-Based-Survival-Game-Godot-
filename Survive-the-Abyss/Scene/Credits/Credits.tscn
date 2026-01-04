@@ -1,0 +1,89 @@
+[gd_scene load_steps=13 format=3 uid="uid://c85rrcyk87t01"]
+
+[ext_resource type="Script" uid="uid://21wjsimu1vj7" path="res://Scene/Credits/credits.gd" id="1_8itp0"]
+[ext_resource type="Script" uid="uid://ddr5lqltikhkw" path="res://Scripts/Credits.gd" id="2_0p2m2"]
+[ext_resource type="Texture2D" uid="uid://dqbdibg7sipsh" path="res://Asset/Screenshot 2025-11-10 013516.png" id="3_0p2m2"]
+[ext_resource type="Texture2D" uid="uid://ct4l72xupdgkx" path="res://Asset/Screenshot 2025-11-10 012640.png" id="4_fgqyh"]
+[ext_resource type="Texture2D" uid="uid://1shde8nn52hc" path="res://Asset/Screenshot 2025-11-10 012909.png" id="5_v6evn"]
+[ext_resource type="Texture2D" uid="uid://ck11smkcg8drn" path="res://Asset/Screenshot 2025-11-10 012916.png" id="6_bmd7f"]
+[ext_resource type="Texture2D" uid="uid://djvik00edmt3h" path="res://Asset/Screenshot 2025-11-10 013312.png" id="7_aus7y"]
+
+[sub_resource type="Resource" id="Resource_h04n7"]
+script = ExtResource("2_0p2m2")
+sprite = ExtResource("3_0p2m2")
+license = "This asset pack can be used in both free and commercial projects. You can modify it to suit your own needs."
+creator = "	Pupkin Assets"
+metadata/_custom_type_script = "uid://ddr5lqltikhkw"
+
+[sub_resource type="Resource" id="Resource_7ynud"]
+script = ExtResource("2_0p2m2")
+sprite = ExtResource("4_fgqyh")
+license = "Public domain and free to use, personal or commercial. "
+creator = "Szadi art."
+metadata/_custom_type_script = "uid://ddr5lqltikhkw"
+
+[sub_resource type="Resource" id="Resource_mrhet"]
+script = ExtResource("2_0p2m2")
+sprite = ExtResource("5_v6evn")
+license = "item grants you royalty free usage in unlimited projects."
+creator = ""
+metadata/_custom_type_script = "uid://ddr5lqltikhkw"
+
+[sub_resource type="Resource" id="Resource_yl6q1"]
+script = ExtResource("2_0p2m2")
+sprite = ExtResource("6_bmd7f")
+license = "item grants you royalty free usage in unlimited projects."
+creator = ""
+metadata/_custom_type_script = "uid://ddr5lqltikhkw"
+
+[sub_resource type="Resource" id="Resource_g7v0c"]
+script = ExtResource("2_0p2m2")
+sprite = ExtResource("7_aus7y")
+license = "You can use this asset pack with your commercial or non-commercial projects"
+creator = "Kronovi-"
+metadata/_custom_type_script = "uid://ddr5lqltikhkw"
+
+[node name="Credits" type="CanvasLayer"]
+script = ExtResource("1_8itp0")
+credits_data = Array[ExtResource("2_0p2m2")]([SubResource("Resource_h04n7"), SubResource("Resource_7ynud"), SubResource("Resource_mrhet"), SubResource("Resource_yl6q1"), SubResource("Resource_g7v0c")])
+
+[node name="Panel" type="Panel" parent="."]
+offset_right = 2376.0
+offset_bottom = 1408.0
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 248.0
+offset_top = 152.0
+offset_right = 288.0
+offset_bottom = 192.0
+scale = Vector2(1.5, 1.5)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control"]
+layout_mode = 0
+offset_right = 92.0
+offset_bottom = 62.0
+
+[node name="Credits" type="Label" parent="Control/VBoxContainer"]
+layout_mode = 2
+text = "Credits"
+
+[node name="GridContainer" type="GridContainer" parent="Control/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/h_separation = 40
+columns = 3
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Control/VBoxContainer"]
+layout_mode = 2
+
+[node name="next" type="Button" parent="Control/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Next"
+
+[node name="prev" type="Button" parent="Control/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "Prev"
+
+[connection signal="pressed" from="Control/VBoxContainer/HBoxContainer/next" to="." method="_on_next_pressed"]
+[connection signal="pressed" from="Control/VBoxContainer/HBoxContainer/prev" to="." method="_on_prev_pressed"]

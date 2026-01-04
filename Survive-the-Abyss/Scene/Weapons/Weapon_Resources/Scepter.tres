@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="WeaponData" load_steps=2 format=3 uid="uid://cnq11slg1ooir"]
+
+[ext_resource type="Script" uid="uid://q1uar1jm0etc" path="res://Scripts/Weapons.gd" id="1_oieti"]
+
+[resource]
+script = ExtResource("1_oieti")
+weapon_name = "Scepter"
+damage = 13
+metadata/_custom_type_script = "uid://q1uar1jm0etc"

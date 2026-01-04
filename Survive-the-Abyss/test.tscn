@@ -1,0 +1,29 @@
+[gd_scene load_steps=6 format=3 uid="uid://bl75s101btn1m"]
+
+[ext_resource type="PackedScene" uid="uid://brjoon8u8t127" path="res://Scene/Characters/Enemies/Boss/Boss.tscn" id="1_6uqi0"]
+[ext_resource type="PackedScene" uid="uid://b0a3542in1wa3" path="res://Scene/Characters/Player/player.tscn" id="2_ppyta"]
+[ext_resource type="PackedScene" uid="uid://d05pgtiygcxgi" path="res://Scene/Camera/cam_root.tscn" id="3_ykrsh"]
+[ext_resource type="PackedScene" uid="uid://ltwxbec5uq4o" path="res://Scene/Weapons/scepter.tscn" id="4_ppyta"]
+[ext_resource type="PackedScene" uid="uid://dyt4pyvrs77jn" path="res://Scene/Items/health_portion.tscn" id="5_ykrsh"]
+
+[node name="Test" type="Node2D"]
+
+[node name="Boss" parent="." instance=ExtResource("1_6uqi0")]
+position = Vector2(552, 248)
+
+[node name="Player" parent="." instance=ExtResource("2_ppyta")]
+position = Vector2(256, 264)
+
+[node name="Cam_Root" parent="." instance=ExtResource("3_ykrsh")]
+position = Vector2(256, 264)
+
+[node name="Camera2D" parent="Cam_Root" index="0"]
+zoom = Vector2(2.04, 2.04)
+
+[node name="Scepter" parent="." instance=ExtResource("4_ppyta")]
+position = Vector2(288, 344)
+
+[node name="Health_Portion" parent="." instance=ExtResource("5_ykrsh")]
+position = Vector2(360, 216)
+
+[editable path="Cam_Root"]

@@ -1,0 +1,39 @@
+[gd_scene load_steps=8 format=3 uid="uid://ega6ibvwb2xs"]
+
+[ext_resource type="Script" uid="uid://ci617iwgykng5" path="res://Scene/Systems/Scripts/wave_system.gd" id="1_y027y"]
+[ext_resource type="PackedScene" uid="uid://brjoon8u8t127" path="res://Scene/Characters/Enemies/Boss/Boss.tscn" id="2_1rdqo"]
+[ext_resource type="PackedScene" uid="uid://juprnx6k4gfi" path="res://Scene/Systems/enemy_spawner.tscn" id="2_etsr3"]
+[ext_resource type="PackedScene" uid="uid://cinpf6j6fs8i0" path="res://Scene/Characters/Enemies/Normal/1/enemy_1.tscn" id="3_cjdsr"]
+[ext_resource type="PackedScene" uid="uid://bko5v6uikyt4v" path="res://Scene/Characters/Enemies/Normal/2/enemy_2.tscn" id="4_1rdqo"]
+[ext_resource type="PackedScene" uid="uid://mh4r67weyq3t" path="res://Scene/Characters/Enemies/Normal/3/enemy_3.tscn" id="5_lem02"]
+[ext_resource type="PackedScene" uid="uid://cojvvw1qjfw1g" path="res://Scene/Characters/Enemies/Normal/4/enemy_4.tscn" id="7_lem02"]
+
+[node name="Wave_System" type="Node" node_paths=PackedStringArray("ui_kill_count", "ui_wave_no", "enemy_spawner") groups=["Wave_System"]]
+script = ExtResource("1_y027y")
+ui_kill_count = NodePath("UI/Kill_Count")
+ui_wave_no = NodePath("UI/Wave_NO")
+enemy_spawner = NodePath("Enemy_Spawner")
+boss_scene = ExtResource("2_1rdqo")
+
+[node name="Enemy_Spawner" parent="." instance=ExtResource("2_etsr3")]
+enemy_scenes = Array[PackedScene]([ExtResource("3_cjdsr"), ExtResource("4_1rdqo"), ExtResource("5_lem02"), ExtResource("7_lem02")])
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="Kill_Count" type="Label" parent="UI"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 664.0
+offset_right = 664.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 75
+
+[node name="Wave_NO" type="Label" parent="UI"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 75

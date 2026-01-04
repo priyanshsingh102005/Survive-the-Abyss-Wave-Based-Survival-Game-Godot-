@@ -1,0 +1,28 @@
+[gd_scene load_steps=4 format=3 uid="uid://bn538fdtpc7nw"]
+
+[ext_resource type="Script" uid="uid://c5bnhd7qb5wey" path="res://Scene/Characters/Enemies/Boss/Scripts/laser.gd" id="1_se6ms"]
+[ext_resource type="PackedScene" uid="uid://b0e5u4vht8y8e" path="res://Scene/Hit_Box_and_Hurt_Box/hit_box.tscn" id="2_50dna"]
+
+[sub_resource type="SeparationRayShape2D" id="SeparationRayShape2D_50dna"]
+length = 0.01
+
+[node name="Laser" type="RayCast2D" node_paths=PackedStringArray("line", "hit_box_collision")]
+target_position = Vector2(0, 0)
+collision_mask = 2
+script = ExtResource("1_se6ms")
+line = NodePath("Line2D")
+hit_box_collision = NodePath("Hit_Box/CollisionShape2D")
+
+[node name="Line2D" type="Line2D" parent="."]
+points = PackedVector2Array(0, 0, 0, 0)
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="Hit_Box" parent="." instance=ExtResource("2_50dna")]
+collision_layer = 16
+collision_mask = 0
+damage = 30.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hit_Box"]
+rotation = -1.5708
+shape = SubResource("SeparationRayShape2D_50dna")

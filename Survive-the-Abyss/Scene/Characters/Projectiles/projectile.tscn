@@ -1,0 +1,87 @@
+[gd_scene load_steps=14 format=3 uid="uid://7t3iw1wexwqn"]
+
+[ext_resource type="Texture2D" uid="uid://ck0ukhwpt45d5" path="res://Asset/Roguelike Dungeon - Asset Bundle/Sprites/Player/Scepter/Projectile/Player_Blast_0.png" id="1_7gdjr"]
+[ext_resource type="Script" uid="uid://bp0tsfv3j7oqh" path="res://Scene/Characters/Projectiles/projectile.gd" id="1_ej1va"]
+[ext_resource type="Texture2D" uid="uid://badbogsikkyfq" path="res://Asset/Roguelike Dungeon - Asset Bundle/Sprites/Player/Scepter/Projectile/Player_Blast_1.png" id="2_ej1va"]
+[ext_resource type="PackedScene" uid="uid://b0e5u4vht8y8e" path="res://Scene/Hit_Box_and_Hurt_Box/hit_box.tscn" id="2_tcea3"]
+[ext_resource type="Texture2D" uid="uid://dft8aoejf8uwa" path="res://Asset/Roguelike Dungeon - Asset Bundle/Sprites/Player/Scepter/Projectile/Player_Blast_2.png" id="3_tcea3"]
+[ext_resource type="Texture2D" uid="uid://ctdl57m6grkyg" path="res://Asset/Roguelike Dungeon - Asset Bundle/Sprites/Player/Scepter/Projectile/Player_Blast_3.png" id="4_mxnh4"]
+[ext_resource type="Texture2D" uid="uid://be017806hgfjb" path="res://Asset/Roguelike Dungeon - Asset Bundle/Sprites/Player/Scepter/Projectile/Player_Projectile_0.png" id="5_2ts6n"]
+[ext_resource type="Texture2D" uid="uid://d0r5iw3axx73" path="res://Asset/Roguelike Dungeon - Asset Bundle/Sprites/Player/Scepter/Projectile/Player_Projectile_1.png" id="6_8a1eb"]
+[ext_resource type="Texture2D" uid="uid://cup68iov787s3" path="res://Asset/Roguelike Dungeon - Asset Bundle/Sprites/Player/Scepter/Projectile/Player_Projectile_2.png" id="7_ms7yt"]
+[ext_resource type="Texture2D" uid="uid://cprc8xxrl16sy" path="res://Asset/Roguelike Dungeon - Asset Bundle/Sprites/Player/Scepter/Projectile/Player_Projectile_3.png" id="8_ok5dt"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mxnh4"]
+size = Vector2(61, 22)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_uoe8l"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_7gdjr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_ej1va")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_tcea3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_mxnh4")
+}],
+"loop": false,
+"name": &"Blast",
+"speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_2ts6n")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_8a1eb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_ms7yt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_ok5dt")
+}],
+"loop": true,
+"name": &"Projectile",
+"speed": 7.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7gdjr"]
+size = Vector2(15, 16)
+
+[node name="Projectile" type="CharacterBody2D" node_paths=PackedStringArray("body", "anim_sprite")]
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("1_ej1va")
+body = NodePath("Body")
+anim_sprite = NodePath("Body/Sprite")
+
+[node name="Body" type="Node2D" parent="."]
+
+[node name="Hit_Box" parent="Body" instance=ExtResource("2_tcea3")]
+collision_layer = 8
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Body/Hit_Box"]
+position = Vector2(-17.5, 1)
+shape = SubResource("RectangleShape2D_mxnh4")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="Body"]
+sprite_frames = SubResource("SpriteFrames_uoe8l")
+animation = &"Projectile"
+
+[node name="wall_detector" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="wall_detector"]
+shape = SubResource("RectangleShape2D_7gdjr")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+
+[connection signal="body_entered" from="wall_detector" to="." method="_on_wall_detector_body_entered"]

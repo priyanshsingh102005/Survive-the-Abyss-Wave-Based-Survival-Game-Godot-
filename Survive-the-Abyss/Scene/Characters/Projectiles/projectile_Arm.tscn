@@ -1,0 +1,83 @@
+[gd_scene load_steps=12 format=3 uid="uid://csinhdrshl88w"]
+
+[ext_resource type="Script" uid="uid://bcsti4ve3y7jd" path="res://Scene/Characters/Projectiles/projectile_arm.gd" id="1_3teno"]
+[ext_resource type="PackedScene" uid="uid://b0e5u4vht8y8e" path="res://Scene/Hit_Box_and_Hurt_Box/hit_box.tscn" id="1_wnopd"]
+[ext_resource type="Texture2D" uid="uid://dlng35w6oi43b" path="res://Asset/Characters/Enemies/Mecha-stone Golem 0.1/weapon PNG/arm_projectile_glowing.png" id="2_3teno"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mxnh4"]
+size = Vector2(34, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p63ss"]
+atlas = ExtResource("2_3teno")
+region = Rect2(0, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_isk4q"]
+atlas = ExtResource("2_3teno")
+region = Rect2(100, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wamrm"]
+atlas = ExtResource("2_3teno")
+region = Rect2(200, 0, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x1c0x"]
+atlas = ExtResource("2_3teno")
+region = Rect2(0, 100, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rwrks"]
+atlas = ExtResource("2_3teno")
+region = Rect2(100, 100, 100, 100)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ebkwk"]
+atlas = ExtResource("2_3teno")
+region = Rect2(200, 100, 100, 100)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_uoe8l"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p63ss")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_isk4q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wamrm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_x1c0x")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rwrks")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ebkwk")
+}],
+"loop": true,
+"name": &"Projectile",
+"speed": 10.0
+}]
+
+[node name="Projectile_Arm" type="CharacterBody2D"]
+collision_layer = 0
+script = ExtResource("1_3teno")
+
+[node name="Body" type="Node2D" parent="."]
+scale = Vector2(2.5, 2.5)
+
+[node name="Hit_Box" parent="Body" instance=ExtResource("1_wnopd")]
+collision_layer = 16
+collision_mask = 0
+damage = 15.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Body/Hit_Box"]
+position = Vector2(-11, -1)
+shape = SubResource("RectangleShape2D_mxnh4")
+
+[node name="Sprite" type="AnimatedSprite2D" parent="Body"]
+position = Vector2(-38, 12)
+sprite_frames = SubResource("SpriteFrames_uoe8l")
+animation = &"Projectile"
+autoplay = "Projectile"
+frame_progress = 0.206759
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]

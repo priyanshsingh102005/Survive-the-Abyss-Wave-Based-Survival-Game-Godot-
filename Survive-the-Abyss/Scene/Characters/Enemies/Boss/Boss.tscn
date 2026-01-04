@@ -1,0 +1,753 @@
+[gd_scene load_steps=44 format=3 uid="uid://brjoon8u8t127"]
+
+[ext_resource type="Script" uid="uid://bilt641m3wpu6" path="res://Scene/Characters/Enemies/Boss/boss.gd" id="1_8ss62"]
+[ext_resource type="Texture2D" uid="uid://dp21p637w0gkg" path="res://Asset/Characters/Enemies/Mecha-stone Golem 0.1/PNG sheet/Character_sheet.png" id="1_upgc7"]
+[ext_resource type="PackedScene" uid="uid://csinhdrshl88w" path="res://Scene/Characters/Projectiles/projectile_Arm.tscn" id="2_lmf2u"]
+[ext_resource type="Script" uid="uid://couw105c3bde4" path="res://addons/godot_state_charts/state_chart.gd" id="2_nsshs"]
+[ext_resource type="Script" uid="uid://jk2jm1g6q853" path="res://addons/godot_state_charts/compound_state.gd" id="3_hqhw6"]
+[ext_resource type="Script" uid="uid://cytafq8i1y8qm" path="res://addons/godot_state_charts/atomic_state.gd" id="4_d3etu"]
+[ext_resource type="Script" uid="uid://cf1nsco3w0mf6" path="res://addons/godot_state_charts/transition.gd" id="5_hqhw6"]
+[ext_resource type="Script" uid="uid://cwcaes085nvkc" path="res://Scene/Characters/Enemies/Boss/Scripts/state_manager.gd" id="6_b7e66"]
+[ext_resource type="Script" uid="uid://c6sktcrfnrbow" path="res://Scene/Characters/Enemies/Boss/Scripts/States/projectile.gd" id="7_ve0l7"]
+[ext_resource type="Script" uid="uid://dqe4bpn6gmt4g" path="res://Scene/Characters/Enemies/Boss/Scripts/States/idle.gd" id="7_xk0ej"]
+[ext_resource type="PackedScene" uid="uid://bi4ajw4h3qiuy" path="res://Scene/Hit_Box_and_Hurt_Box/hurt_box.tscn" id="8_yhvn2"]
+[ext_resource type="PackedScene" uid="uid://b0e5u4vht8y8e" path="res://Scene/Hit_Box_and_Hurt_Box/hit_box.tscn" id="9_1pju1"]
+[ext_resource type="Script" uid="uid://rdeiwl2727oe" path="res://Scene/Characters/Enemies/Boss/Scripts/States/melee_attack.gd" id="9_mkmyx"]
+[ext_resource type="PackedScene" uid="uid://bcwkugn6v3oy7" path="res://addons/godot_state_charts/utilities/state_chart_debugger.tscn" id="10_1pju1"]
+[ext_resource type="Script" uid="uid://cn374s260lfn4" path="res://Scene/Characters/Enemies/Boss/Scripts/States/charge_up.gd" id="10_l2glq"]
+[ext_resource type="Script" uid="uid://v5h5xrfdikvb" path="res://Scene/Characters/Enemies/Boss/Scripts/States/laser_attack.gd" id="11_df6dg"]
+[ext_resource type="Script" uid="uid://b343nc7flaa48" path="res://Scene/Characters/Enemies/Boss/Scripts/States/defence.gd" id="12_6u3aq"]
+[ext_resource type="Script" uid="uid://n83ml34xk5dj" path="res://Scene/Characters/Enemies/Boss/Scripts/States/power_up.gd" id="13_lmf2u"]
+[ext_resource type="Script" uid="uid://b71kapaw8xkuj" path="res://Scene/Characters/Enemies/Boss/Scripts/States/death.gd" id="14_b8mmx"]
+[ext_resource type="Script" uid="uid://f6irnw18ow3u" path="res://Scene/UI/Health_Bar/health_bar.gd" id="14_fw8lv"]
+[ext_resource type="PackedScene" uid="uid://bn538fdtpc7nw" path="res://Scene/Characters/Enemies/Boss/laser.tscn" id="15_5jyim"]
+
+[sub_resource type="Animation" id="Animation_fmfp8"]
+resource_name = "Charge_Up"
+length = 0.8
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [10, 11, 12, 13, 14, 15, 16, 17]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Hit_Box/CollisionShape2D2:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.20019, 0.603295, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [true, false, false, true]
+}
+
+[sub_resource type="Animation" id="Animation_yhvn2"]
+resource_name = "Death"
+length = 1.3
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.1, 1.2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82]
+}
+
+[sub_resource type="Animation" id="Animation_hqhw6"]
+resource_name = "Defence"
+length = 0.8
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [30, 31, 32, 33, 34, 35, 36, 37]
+}
+
+[sub_resource type="Animation" id="Animation_upgc7"]
+resource_name = "Idle"
+length = 0.4
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Hurt_Box:collision_mask")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [8]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Hit_Box/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Hit_Box/CollisionShape2D2:disabled")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_8ss62"]
+resource_name = "Laser_beam"
+length = 0.7
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [50, 51, 52, 53, 54, 55, 56]
+}
+
+[sub_resource type="Animation" id="Animation_d3etu"]
+resource_name = "Melee_Attack"
+length = 0.7
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [40, 41, 42, 43, 44, 45, 46]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Hit_Box/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.6, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [true, false, true]
+}
+
+[sub_resource type="Animation" id="Animation_b7e66"]
+resource_name = "Power_Up"
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [60, 61, 62, 63, 64, 65, 66, 67, 68, 69]
+}
+
+[sub_resource type="Animation" id="Animation_8t648"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Hit_Box/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Hurt_Box:collision_mask")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [8]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Hit_Box/CollisionShape2D2:disabled")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_nsshs"]
+resource_name = "Shoot"
+length = 0.9
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [20, 21, 22, 23, 24, 25, 26, 27, 28]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("..")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0.8),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"activate_projectile"
+}]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_1pju1"]
+_data = {
+&"Charge_Up": SubResource("Animation_fmfp8"),
+&"Death": SubResource("Animation_yhvn2"),
+&"Defence": SubResource("Animation_hqhw6"),
+&"Idle": SubResource("Animation_upgc7"),
+&"Laser_beam": SubResource("Animation_8ss62"),
+&"Melee_Attack": SubResource("Animation_d3etu"),
+&"Power_Up": SubResource("Animation_b7e66"),
+&"RESET": SubResource("Animation_8t648"),
+&"Shoot": SubResource("Animation_nsshs")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ve0l7"]
+size = Vector2(20, 35.6)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6u3aq"]
+size = Vector2(43.2375, 33.6)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lmf2u"]
+size = Vector2(22.8, 32.4)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xk0ej"]
+size = Vector2(21.2, 33.6)
+
+[sub_resource type="Animation" id="Animation_lmf2u"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0472]
+}
+
+[sub_resource type="Animation" id="Animation_6u3aq"]
+resource_name = "rotation"
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.0472, -0.872665]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_b8mmx"]
+_data = {
+&"RESET": SubResource("Animation_lmf2u"),
+&"rotation": SubResource("Animation_6u3aq")
+}
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_upgc7"]
+radius = 20.0
+height = 106.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tn7ki"]
+bg_color = Color(0, 0, 0, 0)
+skew = Vector2(1, 0)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3c206"]
+bg_color = Color(0.817603, 0, 0.0755906, 1)
+skew = Vector2(1, 0)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 2
+border_width_bottom = 3
+border_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pc6lp"]
+bg_color = Color(1, 1, 1, 0)
+skew = Vector2(1, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_exumb"]
+bg_color = Color(1, 1, 1, 1)
+skew = Vector2(1, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 0, 0, 1)
+border_blend = true
+
+[node name="Boss" type="CharacterBody2D" node_paths=PackedStringArray("body", "state_manager", "projectile_point")]
+z_index = 2
+collision_layer = 4
+script = ExtResource("1_8ss62")
+body = NodePath("Body")
+state_manager = NodePath("State_Manager")
+projectile_scene = ExtResource("2_lmf2u")
+projectile_point = NodePath("Body/Projectile_Point")
+
+[node name="StateChart" type="Node" parent="."]
+script = ExtResource("2_nsshs")
+metadata/_custom_type_script = "uid://couw105c3bde4"
+
+[node name="root" type="Node" parent="StateChart"]
+script = ExtResource("3_hqhw6")
+initial_state = NodePath("Phase_1")
+
+[node name="Phase_1" type="Node" parent="StateChart/root"]
+script = ExtResource("3_hqhw6")
+initial_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="StateChart/root/Phase_1"]
+script = ExtResource("4_d3etu")
+
+[node name="projectile" type="Node" parent="StateChart/root/Phase_1/Idle"]
+script = ExtResource("5_hqhw6")
+to = NodePath("../../Projectile")
+event = &"projectile"
+delay_in_seconds = "0.0"
+
+[node name="attack" type="Node" parent="StateChart/root/Phase_1/Idle"]
+script = ExtResource("5_hqhw6")
+to = NodePath("../../Melee_attack")
+event = &"attack"
+delay_in_seconds = "0.0"
+
+[node name="Projectile" type="Node" parent="StateChart/root/Phase_1"]
+script = ExtResource("4_d3etu")
+
+[node name="idle" type="Node" parent="StateChart/root/Phase_1/Projectile"]
+script = ExtResource("5_hqhw6")
+to = NodePath("../../Idle")
+event = &"idle"
+delay_in_seconds = "0.0"
+
+[node name="Melee_attack" type="Node" parent="StateChart/root/Phase_1"]
+script = ExtResource("4_d3etu")
+
+[node name="idle" type="Node" parent="StateChart/root/Phase_1/Melee_attack"]
+script = ExtResource("5_hqhw6")
+to = NodePath("../../Idle")
+event = &"idle"
+delay_in_seconds = "0.0"
+
+[node name="Phase_2" type="Node" parent="StateChart/root/Phase_1"]
+script = ExtResource("5_hqhw6")
+to = NodePath("../../Phase_2")
+event = &"phase_2"
+delay_in_seconds = "0.0"
+
+[node name="Phase_2" type="Node" parent="StateChart/root"]
+script = ExtResource("3_hqhw6")
+initial_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="StateChart/root/Phase_2"]
+script = ExtResource("4_d3etu")
+
+[node name="charge_up" type="Node" parent="StateChart/root/Phase_2/Idle"]
+script = ExtResource("5_hqhw6")
+to = NodePath("../../Charge_Up")
+event = &"charge_up"
+delay_in_seconds = "0.0"
+
+[node name="projectile" type="Node" parent="StateChart/root/Phase_2/Idle"]
+script = ExtResource("5_hqhw6")
+to = NodePath("../../Projectile")
+event = &"projectile"
+delay_in_seconds = "0.0"
+
+[node name="Charge_Up" type="Node" parent="StateChart/root/Phase_2"]
+script = ExtResource("4_d3etu")
+
+[node name="attack" type="Node" parent="StateChart/root/Phase_2/Charge_Up"]
+script = ExtResource("5_hqhw6")
+to = NodePath("../../Laser_Attack")
+event = &"attack"
+delay_in_seconds = "0.0"
+
+[node name="Laser_Attack" type="Node" parent="StateChart/root/Phase_2"]
+script = ExtResource("4_d3etu")
+
+[node name="idle" type="Node" parent="StateChart/root/Phase_2/Laser_Attack"]
+script = ExtResource("5_hqhw6")
+to = NodePath("../../Idle")
+event = &"idle"
+delay_in_seconds = "0.0"
+
+[node name="Projectile" type="Node" parent="StateChart/root/Phase_2"]
+script = ExtResource("4_d3etu")
+
+[node name="idle" type="Node" parent="StateChart/root/Phase_2/Projectile"]
+script = ExtResource("5_hqhw6")
+to = NodePath("../../Idle")
+event = &"idle"
+delay_in_seconds = "0.0"
+
+[node name="Phase_3" type="Node" parent="StateChart/root/Phase_2"]
+script = ExtResource("5_hqhw6")
+to = NodePath("../../Phase_3")
+event = &"phase_3"
+delay_in_seconds = "0.0"
+
+[node name="Phase_3" type="Node" parent="StateChart/root"]
+script = ExtResource("3_hqhw6")
+initial_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="StateChart/root/Phase_3"]
+script = ExtResource("4_d3etu")
+
+[node name="defence" type="Node" parent="StateChart/root/Phase_3/Idle"]
+script = ExtResource("5_hqhw6")
+to = NodePath("../../Defence")
+event = &"defence"
+delay_in_seconds = "0.0"
+
+[node name="power_up" type="Node" parent="StateChart/root/Phase_3/Idle"]
+script = ExtResource("5_hqhw6")
+to = NodePath("../../Power_Up")
+event = &"power_up"
+delay_in_seconds = "0.0"
+
+[node name="attack" type="Node" parent="StateChart/root/Phase_3/Idle"]
+script = ExtResource("5_hqhw6")
+to = NodePath("../../Melee_Attack")
+event = &"attack"
+delay_in_seconds = "0.0"
+
+[node name="Defence" type="Node" parent="StateChart/root/Phase_3"]
+script = ExtResource("4_d3etu")
+
+[node name="idle" type="Node" parent="StateChart/root/Phase_3/Defence"]
+script = ExtResource("5_hqhw6")
+to = NodePath("../../Idle")
+event = &"idle"
+delay_in_seconds = "0.0"
+
+[node name="Power_Up" type="Node" parent="StateChart/root/Phase_3"]
+script = ExtResource("4_d3etu")
+
+[node name="idle" type="Node" parent="StateChart/root/Phase_3/Power_Up"]
+script = ExtResource("5_hqhw6")
+to = NodePath("../../Idle")
+event = &"idle"
+delay_in_seconds = "0.0"
+
+[node name="attack" type="Node" parent="StateChart/root/Phase_3/Power_Up"]
+script = ExtResource("5_hqhw6")
+to = NodePath("../../Melee_Attack")
+event = &"attack"
+delay_in_seconds = "0.0"
+
+[node name="Melee_Attack" type="Node" parent="StateChart/root/Phase_3"]
+script = ExtResource("4_d3etu")
+
+[node name="idle" type="Node" parent="StateChart/root/Phase_3/Melee_Attack"]
+script = ExtResource("5_hqhw6")
+to = NodePath("../../Idle")
+event = &"idle"
+delay_in_seconds = "0.0"
+
+[node name="death" type="Node" parent="StateChart/root/Phase_3"]
+script = ExtResource("5_hqhw6")
+to = NodePath("../../Death")
+event = &"death"
+delay_in_seconds = "0.0"
+
+[node name="Death" type="Node" parent="StateChart/root"]
+script = ExtResource("4_d3etu")
+
+[node name="State_Manager" type="Node" parent="." node_paths=PackedStringArray("anim_player", "hurt_box", "state_chart", "health_bar", "idle_timer")]
+script = ExtResource("6_b7e66")
+anim_player = NodePath("../Body/AnimationPlayer")
+hurt_box = NodePath("../Body/Hurt_Box")
+state_chart = NodePath("../StateChart")
+health_bar = NodePath("../HealthBar")
+idle_timer = NodePath("../Idle_time")
+
+[node name="Idle" type="Node" parent="State_Manager"]
+script = ExtResource("7_xk0ej")
+
+[node name="Projectile" type="Node" parent="State_Manager"]
+script = ExtResource("7_ve0l7")
+
+[node name="Melee_Attack" type="Node" parent="State_Manager"]
+script = ExtResource("9_mkmyx")
+
+[node name="Charge_Up" type="Node" parent="State_Manager" node_paths=PackedStringArray("charge_up_timer")]
+script = ExtResource("10_l2glq")
+charge_up_timer = NodePath("../../charge_up")
+
+[node name="Laser_Attack" type="Node" parent="State_Manager" node_paths=PackedStringArray("laser_timer", "laser")]
+script = ExtResource("11_df6dg")
+laser_timer = NodePath("../../laser_timer")
+laser = NodePath("../../Body/Laser")
+
+[node name="Defence" type="Node" parent="State_Manager" node_paths=PackedStringArray("Defence_timer")]
+script = ExtResource("12_6u3aq")
+Defence_timer = NodePath("../../defence_timer")
+
+[node name="Power_Up" type="Node" parent="State_Manager"]
+script = ExtResource("13_lmf2u")
+
+[node name="Death" type="Node" parent="State_Manager"]
+script = ExtResource("14_b8mmx")
+
+[node name="Body" type="Node2D" parent="."]
+scale = Vector2(2.5, 2.5)
+
+[node name="Sprite" type="Sprite2D" parent="Body"]
+position = Vector2(2, 5)
+texture = ExtResource("1_upgc7")
+hframes = 10
+vframes = 10
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Body"]
+libraries = {
+&"": SubResource("AnimationLibrary_1pju1")
+}
+
+[node name="Hurt_Box" parent="Body" instance=ExtResource("8_yhvn2")]
+collision_layer = 0
+collision_mask = 8
+max_health = 300.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Body/Hurt_Box"]
+position = Vector2(2, 5.8)
+shape = SubResource("RectangleShape2D_ve0l7")
+
+[node name="Hit_Box" parent="Body" instance=ExtResource("9_1pju1")]
+collision_layer = 16
+collision_mask = 0
+damage = 18.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Body/Hit_Box"]
+position = Vector2(12.0187, 7.2)
+shape = SubResource("RectangleShape2D_6u3aq")
+disabled = true
+debug_color = Color(0.291703, 0.63647, 5.77569e-07, 0.42)
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Body/Hit_Box"]
+position = Vector2(1.4, 6.2)
+shape = SubResource("RectangleShape2D_lmf2u")
+disabled = true
+debug_color = Color(0.999719, 0, 0.103599, 0.42)
+
+[node name="Attack_Ranage" type="Area2D" parent="Body"]
+position = Vector2(22, 7.2)
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Body/Attack_Ranage"]
+position = Vector2(0.200001, -0.400002)
+shape = SubResource("RectangleShape2D_xk0ej")
+
+[node name="Laser" parent="Body" instance=ExtResource("15_5jyim")]
+position = Vector2(4, -12)
+rotation = 1.0472
+target_position = Vector2(1000, 0)
+speed = 2000.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Body/Laser"]
+libraries = {
+&"": SubResource("AnimationLibrary_b8mmx")
+}
+speed_scale = 0.5
+
+[node name="Projectile_Point" type="Node2D" parent="Body"]
+position = Vector2(29.2, -4.4)
+scale = Vector2(0.4, 0.4)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(5, 4)
+shape = SubResource("CapsuleShape2D_upgc7")
+
+[node name="HealthBar" type="ProgressBar" parent="." node_paths=PackedStringArray("timer", "damage_bar")]
+z_index = 1
+offset_left = -59.0
+offset_top = -71.0
+offset_right = 74.0
+offset_bottom = -57.0
+theme_override_styles/background = SubResource("StyleBoxFlat_tn7ki")
+theme_override_styles/fill = SubResource("StyleBoxFlat_3c206")
+value = 89.9
+show_percentage = false
+script = ExtResource("14_fw8lv")
+timer = NodePath("Timer")
+damage_bar = NodePath("DamageBar")
+
+[node name="DamageBar" type="ProgressBar" parent="HealthBar"]
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_pc6lp")
+theme_override_styles/fill = SubResource("StyleBoxFlat_exumb")
+value = 100.0
+show_percentage = false
+
+[node name="Timer" type="Timer" parent="HealthBar"]
+wait_time = 2.0
+one_shot = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+visible = false
+
+[node name="StateChartDebugger" parent="CanvasLayer" instance=ExtResource("10_1pju1")]
+initial_node_to_watch = NodePath("../../StateChart")
+
+[node name="Idle_time" type="Timer" parent="."]
+one_shot = true
+
+[node name="charge_up" type="Timer" parent="."]
+one_shot = true
+
+[node name="laser_timer" type="Timer" parent="."]
+one_shot = true
+
+[node name="defence_timer" type="Timer" parent="."]
+one_shot = true
+
+[node name="power_up_timer" type="Timer" parent="."]
+one_shot = true
+
+[connection signal="state_physics_processing" from="StateChart/root/Phase_1" to="State_Manager" method="_on_phase_1_state_physics_processing"]
+[connection signal="state_entered" from="StateChart/root/Phase_1/Idle" to="State_Manager/Idle" method="_on_idle_state_entered"]
+[connection signal="state_physics_processing" from="StateChart/root/Phase_1/Idle" to="State_Manager/Idle" method="_on_idle_state_physics_processing"]
+[connection signal="state_entered" from="StateChart/root/Phase_1/Projectile" to="State_Manager/Projectile" method="_on_projectile_state_entered"]
+[connection signal="state_entered" from="StateChart/root/Phase_1/Melee_attack" to="State_Manager/Melee_Attack" method="_on_melee_attack_state_entered"]
+[connection signal="state_processing" from="StateChart/root/Phase_2" to="State_Manager" method="_on_phase_2_state_processing"]
+[connection signal="state_entered" from="StateChart/root/Phase_2/Idle" to="State_Manager/Idle" method="_on_idle_state_entered"]
+[connection signal="state_physics_processing" from="StateChart/root/Phase_2/Idle" to="State_Manager/Idle" method="_on_idle_state_physics_processing"]
+[connection signal="state_entered" from="StateChart/root/Phase_2/Charge_Up" to="State_Manager/Charge_Up" method="_on_charge_up_state_entered"]
+[connection signal="state_entered" from="StateChart/root/Phase_2/Laser_Attack" to="State_Manager/Laser_Attack" method="_on_laser_attack_state_entered"]
+[connection signal="state_entered" from="StateChart/root/Phase_2/Projectile" to="State_Manager/Projectile" method="_on_projectile_state_entered"]
+[connection signal="state_physics_processing" from="StateChart/root/Phase_3" to="State_Manager" method="_on_phase_3_state_physics_processing"]
+[connection signal="state_entered" from="StateChart/root/Phase_3/Idle" to="State_Manager/Idle" method="_on_idle_state_entered"]
+[connection signal="state_physics_processing" from="StateChart/root/Phase_3/Idle" to="State_Manager/Idle" method="_on_idle_state_physics_processing"]
+[connection signal="state_entered" from="StateChart/root/Phase_3/Defence" to="State_Manager/Defence" method="_on_defence_state_entered"]
+[connection signal="state_entered" from="StateChart/root/Phase_3/Power_Up" to="State_Manager/Power_Up" method="_on_power_up_state_entered"]
+[connection signal="state_entered" from="StateChart/root/Phase_3/Melee_Attack" to="State_Manager/Melee_Attack" method="_on_melee_attack_state_entered"]
+[connection signal="state_entered" from="StateChart/root/Death" to="State_Manager/Death" method="_on_death_state_entered"]
+[connection signal="area_entered" from="Body/Hurt_Box" to="State_Manager" method="_on_hurt_box_area_entered"]
+[connection signal="health_depleated" from="Body/Hurt_Box" to="State_Manager/Death" method="_on_hurt_box_health_depleated"]
+[connection signal="health_updated" from="Body/Hurt_Box" to="State_Manager" method="_on_hurt_box_health_updated"]
+[connection signal="body_entered" from="Body/Attack_Ranage" to="State_Manager" method="_on_attack_ranage_body_entered"]
+[connection signal="body_exited" from="Body/Attack_Ranage" to="State_Manager" method="_on_attack_ranage_body_exited"]
+[connection signal="timeout" from="HealthBar/Timer" to="HealthBar" method="_on_timer_timeout"]
+[connection signal="timeout" from="Idle_time" to="State_Manager" method="_on_idle_time_timeout"]
+[connection signal="timeout" from="charge_up" to="State_Manager/Charge_Up" method="_on_charge_up_timeout"]
+[connection signal="timeout" from="laser_timer" to="State_Manager/Laser_Attack" method="_on_laser_timer_timeout"]
+[connection signal="timeout" from="defence_timer" to="State_Manager/Defence" method="_on_defence_timer_timeout"]
