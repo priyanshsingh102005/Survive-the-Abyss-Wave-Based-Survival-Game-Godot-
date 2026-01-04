@@ -8,7 +8,7 @@ Face relentless waves of enemies, collect powerful weapons, and survive long eno
 ---
 
 ## 🎮 Gameplay Preview
-<a href="https://void200510.itch.io/survive-the-abyss">
+<a href="https://youtu.be/NmKo1jd-lj4">
   <img src="media/video.png" width="600" alt="Survive the Abyss Gameplay">
 </a>
 
